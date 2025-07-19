@@ -1,0 +1,120 @@
+/* === Reset Browser Defaults === */
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* === Layout === */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  position: relative;
+}
+
+
+/* === Artwork Wrapper === */
+.artwork-wrapper {
+  position: relative;
+  display: inline-block;
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+
+/* === Image + Overlay === */
+.artwork-image-wrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.artwork-image {
+  width: 100%;
+  display: block;
+  /* Removed white border */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.artwork-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  transition: opacity 0.3s ease;
+}
+
+/* === Description and Caption === */
+.artwork-description {
+  color: white;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.artwork-caption {
+  text-align: right;
+  margin-top: 6px;
+  font-size: 1.1rem;
+  color: black;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-style: italic;
+}
+
+.artwork-id-date {
+  text-align: left;
+  margin-bottom: 3px;
+  font-size: 1.1rem; /* larger than 0.9rem */
+  color: black;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-weight: 500;
+}
+
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.thumbnail-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 22px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.thumb {
+  height: 60px;
+  width: auto;
+  cursor: pointer;
+  opacity: 0.6;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  transition: transform 0.25s, opacity 0.25s;
+}
+
+.thumb:hover {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.thumb.active {
+  opacity: 1;
+  outline: 2px solid #000;
+}
