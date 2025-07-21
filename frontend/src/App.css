@@ -1,120 +1,239 @@
-/* === Reset Browser Defaults === */
+/* =========================================================
+   App.css  (All-in-one: tokens + base + components)
+   ========================================================= */
+
+/* ---------- 1. Design Tokens (CSS Custom Properties) ---------- */
+:root {
+  /* Font families */
+  --font-sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Georgia', 'Times New Roman', serif;
+
+  /* Font sizes (type scale) */
+  --font-size-2xs: 10px;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 20px;
+  --font-size-xl: 28px;
+
+  /* Line heights */
+  --lh-tight: 1.2;
+  --lh-normal: 1.45;
+  --lh-relaxed: 1.6;
+
+  /* Spacing scale (vertical / horizontal) */
+  --space-2xs: 4px;
+  --space-xs: 6px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+
+  /* Component sizing */
+  --artwork-max-width: 640px;
+
+  /* Colors */
+  --color-text: #111;
+  --color-text-muted: #444;
+  --color-bg: #ffffff;
+  --color-overlay: rgba(0, 0, 0, 0.75);
+  --color-pill-bg: rgba(255, 255, 255, 0.5);
+  --color-shadow-rgba: rgba(0, 0, 0, 0.1);
+
+  /* Radii & shadows */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 4px 12px var(--color-shadow-rgba);
+
+  /* Motion */
+  --ease-standard: 0.3s ease;
+}
+
+/* ---------- 2. Base Reset / Global Styles ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  line-height: var(--lh-normal);
+  background: var(--color-bg);
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
 }
 
-/* === Layout === */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+body {
+  /* Body background gets overridden dynamically in App.js if artwork.bgColor exists */
+  transition: background-color var(--ease-standard);
+}
+
+/* ---------- 3. Layout Container ---------- */
 .app-container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
+  padding: var(--space-2xl) var(--space-lg);
   position: relative;
 }
 
-
-/* === Artwork Wrapper === */
+/* ---------- 4. Artwork Component ---------- */
 .artwork-wrapper {
   position: relative;
-  display: inline-block;
-  max-width: 90vw;
-  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  /* Gap defines vertical rhythm between: ID/date row, image block, caption */
+  gap: var(--space-2xs);
+  width: min(90vw, var(--artwork-max-width));
 }
 
+/* Top row: ID + date */
+.artwork-id-date {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: var(--font-size-md);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0; /* In case you change to <p> later */
+}
 
-/* === Image + Overlay === */
+/* Pill showing artwork ID */
+.artwork-id-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Size (adjust as needed) */
+  /* min-width: 50px; */
+  height: 22px;
+  padding: 0 8px;
+
+  /* Your requirements */
+  background: rgba(255, 255, 255, 0.5); /* #FFFFFF at 50% */
+  border-radius: 5px;
+
+  /* Typography */
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  color: #000; /* Dark text on light translucent pill */
+
+  /* Optional polish */
+  backdrop-filter: blur(5px); /* “glass” effect (optional) */
+  -webkit-backdrop-filter: blur(4px); /* Safari */
+  box-sizing: border-box;
+  border: none;
+}
+
+/* Image wrapper (for hover overlay positioning) */
 .artwork-image-wrapper {
   position: relative;
   width: 100%;
   cursor: pointer;
+  /* border-radius: var(--radius-md); ensures overlay corners round too */
+  overflow: hidden;                /* clip overlay + image radius */
 }
 
 .artwork-image {
   width: 100%;
   display: block;
-  /* Removed white border */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  /* If you want a consistent aspect ratio, uncomment:
+     aspect-ratio: 4 / 3;
+     object-fit: cover;
+  */
 }
 
+/* Hover overlay (description) */
 .artwork-overlay {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
+  inset: 0;
+  background: var(--color-overlay);
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 20px;
+  padding: var(--space-xl);
   box-sizing: border-box;
-  transition: opacity 0.3s ease;
+  opacity: 1;
+  transition: opacity var(--ease-standard);
 }
 
-/* === Description and Caption === */
 .artwork-description {
-  color: white;
-  font-size: 1.2rem;
-  line-height: 1.5;
-  text-align: center;
+  font-size: var(--font-size-md);
+  line-height: var(--lh-relaxed);
+  font-family: var(--font-mono);
+  margin: 0;
 }
 
 .artwork-caption {
   text-align: right;
-  margin-top: 6px;
-  font-size: 1.1rem;
-  color: black;
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: var(--font-size-md);
+  font-family: var(--font-mono);
   font-style: italic;
-}
-
-.artwork-id-date {
-  text-align: left;
-  margin-bottom: 3px;
-  font-size: 1.1rem; /* larger than 0.9rem */
-  color: black;
-  font-family: 'Georgia', 'Times New Roman', serif;
   font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+  /* If you need more space above/below, adjust:
+     margin-top: var(--space-xs);
+  */
 }
 
-
-.nav {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 14px;
+/* ---------- 5. State / Interaction Variations (Optional) ---------- */
+/* If you ever change to always-mount overlay with a class toggle:
+.artwork-overlay {
+  opacity: 0;
+  pointer-events: none;
 }
-
-.thumbnail-row {
-  display: flex;
-  gap: 8px;
-  margin-top: 22px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.thumb {
-  height: 60px;
-  width: auto;
-  cursor: pointer;
-  opacity: 0.6;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  transition: transform 0.25s, opacity 0.25s;
-}
-
-.thumb:hover {
+.artwork-image-wrapper:hover .artwork-overlay {
   opacity: 1;
-  transform: scale(1.05);
+  pointer-events: auto;
+}
+*/
+
+/* ---------- 6. Responsive Adjustments ---------- */
+@media (max-width: 480px) {
+  :root {
+    /* Slightly reduce base size or keep; your call */
+    --font-size-md: 15px;
+  }
+
+  .artwork-caption {
+    /* Better readability on narrow screens */
+    text-align: left;
+  }
 }
 
-.thumb.active {
-  opacity: 1;
-  outline: 2px solid #000;
+/* Example: Even tighter layout on very small screens */
+@media (max-width: 360px) {
+  :root {
+    --space-sm: 6px;
+    --space-md: 10px;
+    --space-lg: 14px;
+  }
+  .artwork-id-date {
+    gap: var(--space-sm);
+  }
 }
+

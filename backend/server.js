@@ -13,15 +13,13 @@ function loadArtworks() {
   return JSON.parse(raw);
 }
 
-// GET all artworks
 app.get('/api/artworks', (req, res) => {
-  const artworks = loadArtworks();
-  res.json(artworks);
+  res.json(loadArtworks());
 });
 
-// (Later) we'll add /api/daily-artwork here.
-
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Backend running: http://localhost:${PORT}`);
+app.get('/', (req, res) => {
+  res.send('API ok. Try /api/artworks');
 });
+
+const PORT = 5050;
+app.listen(PORT, () => console.log(`Backend running: http://localhost:${PORT}`));

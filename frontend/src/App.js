@@ -4,16 +4,16 @@ import { getFormattedDate } from "./utils/formatDate";
 
 function App() {
   const [artworks, setArtworks] = useState([]);
-  const [index, setIndex] = useState(0);      // <- change this manually to see different images
+  const [index, setIndex] = useState(1);      // <- change this manually to see different images
   const [hovered, setHovered] = useState(false);
   const todayString = getFormattedDate();
 
   useEffect(() => {
     (async () => {
-      const res = await fetch("http://localhost:5000/api/artworks");
-      const data = await res.json();
-      setArtworks(data);
-      setIndex(0); // start at first one
+        const res = await fetch("/api/artworks");
+        const data = await res.json();
+        setArtworks(data);
+        setIndex(0); // start at first one
     })();
   }, []);
 
@@ -28,9 +28,11 @@ function App() {
 
   return (
     <div className="app-container">
-      <div className="artwork-wrapper">
+        <div className="artwork-wrapper">
         <div className="artwork-id-date">
-          {artwork.id} <span style={{ margin: "0 10px" }} /> {todayString}
+            <span className="artwork-id-pill">{artwork.id}</span>
+            {/* <span className="id-separator" aria-hidden="true">!</span> */}
+            {todayString}
         </div>
 
         <div
@@ -44,10 +46,10 @@ function App() {
             className="artwork-image"
           />
           {hovered && (
-            <div className="artwork-overlay">
-              <div className="artwork-description">
-                <p>{artwork.description}</p>
-              </div>
+                <div className="artwork-overlay">
+                    <div className="artwork-description">
+                     <p>{artwork.description}</p>
+                </div>
             </div>
           )}
         </div>
