@@ -13,7 +13,7 @@ function App() {
         const res = await fetch("/api/artworks");
         const data = await res.json();
         setArtworks(data);
-        setIndex(0); // start at first one
+        setIndex(1); // start at first one
     })();
   }, []);
 
