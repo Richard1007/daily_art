@@ -3,7 +3,7 @@ import "./App.css";
 import { getFormattedDate } from "./utils/formatDate";
 
 function App() {
-  const [artworks, setArtworks] = useState([]);
+  const [artworks, setArtworks] = useState([null]);
   const [index, setIndex] = useState(1);      // <- change this manually to see different images
   const [hovered, setHovered] = useState(false);
   const todayString = getFormattedDate();
@@ -13,7 +13,7 @@ function App() {
         const res = await fetch("/api/artworks");
         const data = await res.json();
         setArtworks(data);
-        setIndex(1); // start at first one
+        setIndex(0); // start at first one
     })();
   }, []);
 
@@ -24,7 +24,8 @@ function App() {
     return () => { document.body.style.background = ""; };
   }, [artwork]);
 
-  if (!artwork) return <div>Loading...</div>;
+  if (artworks === null) return <div>loading...</div>;
+  if (!artwork.length) return <div>No artworks found</div>;
 
   return (
     <div className="app-container">
